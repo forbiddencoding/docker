@@ -1,0 +1,15 @@
+version: '3.9' # optional since v1.27.0
+
+services:
+
+  go:
+    image: forbiddencoding/go:dev
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        GO_VERSION: '1.19.4-bullseye'
+    container_name: 'forbiddencoding-go'
+    volumes:
+      - ./:/usr/src/app
+    restart: on-failure

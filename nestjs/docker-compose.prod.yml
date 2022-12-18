@@ -1,0 +1,18 @@
+version: '3.9' # optional since v1.27.0
+
+services:
+
+  forbiddencoding-nestjs:
+    image: forbiddencoding/nestjs
+    build:
+      context: ./
+      target: production
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: '18.12'
+    container_name: 'forbiddencoding-nestjs'
+    volumes:
+      - /usr/src/app
+    restart: on-failure
+    env_file:
+      - .env

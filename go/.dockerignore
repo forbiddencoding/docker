@@ -1,0 +1,6 @@
+Makefile
+README.md
+build
+tmp
+docker-compose.yml
+.dockerignore
