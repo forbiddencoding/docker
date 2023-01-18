@@ -12,7 +12,8 @@ A collection of Docker and docker-compose files, sometimes with additional files
 
 * [Docker Image Versions](#docker-image-versions)
 * [Golang with Live-Reloading](go/README.md)
-* [NestJS with development and Multi-Stage production](nestjs/README.md)
+* [NestJS with development and Multi-Stage production using npm](nestjs-npm/README.md)
+* [NestJS with development and Multi-Stage production using yarn](nestjs-yarn/README.md)
 
 ## Docker Image Versions
 
