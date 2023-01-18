@@ -41,7 +41,7 @@ FROM node:${NODE_VERSION} as production
 
 LABEL org.opencontainers.image.authors="forbiddencoding"
 
-RUN apt-get update && apt-get updrade -y
+RUN apt-get update && apt-get upgrade -y
 
 ENV NODE_ENV=production
 
@@ -51,6 +51,7 @@ USER node
 
 WORKDIR /usr/src/app
 
+COPY --chown=node:node --from=build /usr/src/app/package*.json /usr/src/app
 COPY --chown=node:node --from=build /usr/src/app/node_modules /usr/src/app/node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist /usr/src/app/dist
 
