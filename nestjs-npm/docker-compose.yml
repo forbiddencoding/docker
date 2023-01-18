@@ -1,0 +1,20 @@
+version: '3.9' # optional since v1.27.0
+
+services:
+
+  nestjs:
+    image: forbiddencoding/nestjs:dev
+    build:
+      context: ./
+      target: development
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: '18.12'
+    container_name: 'forbiddencoding-nestjs-npm'
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app
+    restart: on-failure
+    env_file:
+      - .env
+    command: npm run start:dev
