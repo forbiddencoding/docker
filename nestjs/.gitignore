@@ -1,9 +1,0 @@
-# compiled output
-/dist
-/node_modules
-
-# Tests
-/coverage
-
-.cache
-.env
