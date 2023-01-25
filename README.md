@@ -1,4 +1,4 @@
-# 🐳 Docker
+# Whalecome 🐳
 
 <p>
     <img alt="Docker" src="https://img.shields.io/badge/-Docker-informational?style=for-the-badge&logo=docker&logoColor=white&color=2496ED" />
