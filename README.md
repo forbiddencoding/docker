@@ -1,10 +1,10 @@
 # Whalecome 🐳
 
-<p>
-    <img alt="Docker" src="https://img.shields.io/badge/-Docker-informational?style=for-the-badge&logo=docker&logoColor=white&color=2496ED" />
-    <img alt="Golang" src="https://img.shields.io/badge/-Golang-informational?style=for-the-badge&logo=go&logoColor=white&color=00ADD8" />
-    <img alt="NestJS" src="https://img.shields.io/badge/-NestJS-informational?style=for-the-badge&logo=nestjs&logoColor=white&color=E0234E" />
-</p>
+[![License MIT](https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none&color=A31F34)](LICENSE)
+![Documentation](https://img.shields.io/badge/Documentation-complete-green.svg?style=for-the-badge)
+![Docker](https://img.shields.io/badge/-Docker-informational?style=for-the-badge&logo=docker&logoColor=white&color=2496ED)
+![Golang](https://img.shields.io/badge/-Golang-informational?style=for-the-badge&logo=go&logoColor=white&color=00ADD8)
+![NestJS](https://img.shields.io/badge/-NestJS-informational?style=for-the-badge&logo=nestjs&logoColorlogoColor=white&color=E0234E)
 
 A collection of Docker and docker-compose files, sometimes with additional files I use.
 
