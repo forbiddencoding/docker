@@ -5,6 +5,7 @@
 ![Docker](https://img.shields.io/badge/-Docker-informational?style=for-the-badge&logo=docker&logoColor=white&color=2496ED)
 ![Golang](https://img.shields.io/badge/-Golang-informational?style=for-the-badge&logo=go&logoColor=white&color=00ADD8)
 ![NestJS](https://img.shields.io/badge/-NestJS-informational?style=for-the-badge&logo=nestjs&logoColorlogoColor=white&color=E0234E)
+![Python](https://img.shields.io/badge/-Python-informational?style=for-the-badge&logo=python&logoColor=white&color=3776AB)
 
 A collection of Docker and docker-compose files, sometimes with additional files I use.
 
@@ -14,12 +15,13 @@ A collection of Docker and docker-compose files, sometimes with additional files
 * [Golang with Live-Reloading](go/README.md)
 * [NestJS with development and Multi-Stage production using npm](nestjs-npm/README.md)
 * [NestJS with development and Multi-Stage production using yarn](nestjs-yarn/README.md)
+* [Python with Live-Reloading Development and Multi-Stage production](python/README.md)
 
 ## Docker Image Versions
 
 Usually the build section of every Docker Service includes an argument for pulling
-as specific image version (e.g. NodeJS v18.12). If no argument is given, it defaults
-to the ``latest`` tag.
+a specific image version (e.g., Node.js v18.12).
+If no argument is given, it defaults to the ``latest`` tag.
 
 This behaviour can be changed in the ``docker-compose.yml`` or the ``Dockerfile``
 respectively.
