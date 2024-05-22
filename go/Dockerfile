@@ -1,33 +1,25 @@
+# syntax=docker/dockerfile:1
 ARG GO_VERSION=latest
+ARG CGO_ENABLED=0
 
 FROM golang:${GO_VERSION}
 
 LABEL org.opencontainers.image.authors="forbiddencoding"
-
-ENV GO111MODULE "on"
-ENV GOOS "linux"
-ENV CGO_ENABLED 1
-
-RUN ["go", "install", "github.com/cosmtrek/air@latest"]
-
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
-
-COPY . .
-
-RUN go mod tidy
-RUN go mod download
-RUN go mod verify
-
-COPY ./.air.toml /
-
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-RUN sed -i -e 's/\r$//' /entrypoint.sh
+LABEL org.opencontainers.image.title="forbiddencoding/docker-golang-air"
+LABEL org.opencontainers.version="0.0.2"
+LABEL org.opencontainer.image.description="A Docker image for Golang development with Air."
+LABEL org.opencontainer.image.url="http.s://github.com/forbiddencoding/docker"
+LABEL org.opencontainer.image.licenses="MIT"
 
 STOPSIGNAL SIGTERM
 
-# Healthcheck to make sure container is ready
-HEALTHCHECK --interval=30s --timeout=10s CMD curl -f http://localhost:8080/health || exit 1
+ENV CGO_ENABLED ${CGO_ENABLED}
 
-ENTRYPOINT ["/bin/bash", "-c", "/entrypoint.sh"]
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y build-essential
+
+RUN go install github.com/cosmtrek/air@latest
+
+WORKDIR /usr/src/app
+
+CMD air -c .air.toml
