@@ -1,0 +1,123 @@
+services:
+
+  temporal-setup-postgres:
+    image: temporalio/admin-tools:${TEMPORAL_ADMIN_TOOLS_VERSION}
+    container_name: temporal-setup-postgres
+    restart: on-failure:5
+    networks:
+      - temporal
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: temporal
+      POSTGRES_PWD: temporal
+      POSTGRES_SEEDS: postgres
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: /bin/sh
+    command: /scripts/setup-postgres.sh
+
+  temporal-create-namespace:
+    image: temporalio/admin-tools:${TEMPORAL_ADMIN_TOOLS_VERSION}
+    container_name: temporal-create-namespace
+    restart: on-failure:5
+    depends_on:
+      temporal:
+        condition: service_healthy
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      DEFAULT_NAMESPACE: ${DEFAULT_NAMESPACE}
+    networks:
+      - temporal
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: /bin/sh
+    command: /scripts/create-namespace.sh
+
+  temporal:
+    image: temporalio/server:${TEMPORAL_SERVER_VERSION}
+    hostname: temporal
+    networks:
+      - temporal
+    depends_on:
+      temporal-setup-postgres:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: temporal
+      POSTGRES_PWD: temporal
+      POSTGRES_SEEDS: postgres
+      BIND_ON_IP: 0.0.0.0
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+      LOG_LEVEL: error
+    volumes:
+      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "7233" ]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+      start_period: 30s
+    ports:
+      - '7233:7233'
+
+  temporal-validate:
+    image: temporalio/admin-tools:${TEMPORAL_ADMIN_TOOLS_VERSION}
+    container_name: temporl-validate
+    restart: on-failure:5
+    networks:
+      - temporal
+    depends_on:
+      temporal-create-namespace:
+        condition: service_completed_successfully
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      NAMESPACE: ${DEFAULT_NAMESPACE}
+      MAX_WAIT_TIME: 300
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: /bin/sh -c
+    command: exec /scripts/validate-temporal.sh
+
+  temporal-ui:
+    image: temporalio/ui:${TEMPORAL_UI_VERSION}
+    networks:
+      - temporal
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      TEMPORAL_HIDE_LOGS: true
+    ports:
+      - '8181:8080'
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    hostname: postgres
+    networks:
+      - temporal
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./initdb.d:/docker-entrypoint-initdb.d
+      - postgres-data:/var/lib/postgresql/${POSTGRES_VERSION}/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    ports:
+      - '5432:5432'
+
+volumes:
+  postgres-data:
+
+networks:
+  temporal:
+    driver: bridge
+    name: temporal-network

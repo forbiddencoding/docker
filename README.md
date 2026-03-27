@@ -3,6 +3,7 @@
 ![Docker](https://img.shields.io/badge/-Docker-informational?style=for-the-badge&logo=docker&logoColor=2496ED&color=27272A)
 ![Golang](https://img.shields.io/badge/-Golang-informational?style=for-the-badge&logo=go&logoColor=00ADD8&color=27272A)
 ![NestJS](https://img.shields.io/badge/-NestJS-informational?style=for-the-badge&logo=nestjs&logoColorlogoColor=E0234E&color=27272A)
+![temporal](https://img.shields.io/badge/-temporal-informational?style=for-the-badge&logo=temporal&logoColorlogoColor=E0234E&color=27272A)
 ![Documentation](https://img.shields.io/badge/Documentation-complete-green.svg?style=for-the-badge&color=27272A)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=27272A)](LICENSE)
 
